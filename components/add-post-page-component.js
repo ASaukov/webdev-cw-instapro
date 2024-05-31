@@ -34,10 +34,15 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     renderHeaderComponent({
       element: document.querySelector(".header-container"),
     });
-    
+//     const uploadImage = document.querySelector('.upload=image')
+// uploadImage.addEventListener('click', function (e) {
+//   renderUploadImageComponent()
+// });
+
     document.getElementById("add-button").addEventListener("click", () => {
+      const textareaFoto = document.querySelector('.textarea');
       onAddPostClick({
-        description: "Описание картинки",
+        description: textareaFoto.value,
         imageUrl: "https://image.png",
       });
     });
