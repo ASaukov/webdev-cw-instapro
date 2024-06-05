@@ -1,8 +1,10 @@
+
+
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
 
-export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
+export function renderAddPostPageComponent({ appEl, onAddPostClick, imageUrl }) {
   const render = () => {
     // TODO: Реализовать страницу добавления поста
     const appHtml = `
@@ -34,16 +36,33 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     renderHeaderComponent({
       element: document.querySelector(".header-container"),
     });
-//     const uploadImage = document.querySelector('.upload=image')
-// uploadImage.addEventListener('click', function (e) {
-//   renderUploadImageComponent()
-// });
+
+    const uploadImageContainer = appEl.querySelector(".upload-image-container");
+
+    if (uploadImageContainer) {
+      renderUploadImageComponent({
+        element: appEl.querySelector(".upload-image-container"),
+        onImageUrlChange(newImageUrl) {
+          imageUrl = newImageUrl;
+        },
+      });
+    }
 
     document.getElementById("add-button").addEventListener("click", () => {
       const textareaFoto = document.querySelector('.textarea');
+
+      if(!imageUrl) {
+        alert("Выберете фото");
+        return
+      }
+      if(textareaFoto.value.trim() ==="") {
+        alert("Добавте описание фото")
+        return
+      }
+
       onAddPostClick({
         description: textareaFoto.value,
-        imageUrl: "https://image.png",
+        imageUrl: imageUrl,
       });
     });
   };
