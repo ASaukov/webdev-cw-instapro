@@ -108,3 +108,41 @@ export function getUserPost  ({token, id}) {
     return data.posts;
   });
 }
+
+export function addLike ({id, token}) {
+  return fetch(postsHost + `/${id}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: token
+    }
+  })
+  .then((response) => {
+    if(response.status === 200) {
+      return response.json()
+    }else {
+      throw new Error('Авторизуйтесь что-бы поставить лайк')
+    }
+  })
+  .catch((error) => {
+    throw new Error(error.message)
+  })
+}
+
+export function addDislike ({id, token}) {
+  return fetch(postsHost + `/${id}/dislike`, {
+    method: "POST",
+    headers: {
+      Authorization: token
+    }
+  })
+  .then((response) => {
+    if(response.status === 200) {
+      return response.json()
+    }else {
+      throw new Error('Авторизуйтесь что-бы поставить дизлайк')
+    }
+  })
+  .catch((error) => {
+    throw new Error(error.message)
+  })
+}
