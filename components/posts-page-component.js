@@ -1,11 +1,9 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { posts, goToPage, setPosts, renderApp, getToken, token } from "../index.js";
+import { addDislike, addLike, getPosts } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
-
-  // TODO: реализовать рендер постов из api
-  // console.log("Актуальный список постов:", posts);
 
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
@@ -22,11 +20,12 @@ export function renderPostsPageComponent({ appEl }) {
           <img class="post-image" src=${post.imageUrl}>
         </div>
         <div class="post-likes">
-          <button data-post-id=${post.id} data-liked=${isLiked} class="like-button">
-            <img src="./assets/images/${post.isLiked ? "like-active.svg" : "like-not-active.svg"}>
+          <button data-post-id=${post.id} data-liked=${post.isLiked} class="like-button">
+            <img src="./assets/images/${post.isLiked ? "like-active.svg" : "like-not-active.svg"}">
           </button>
           <p class="post-likes-text">
-            Нравится: <strong>2</strong>
+            Нравится: <strong>${post.likes.length === 0 ? 0 : post.likes.length === 1 
+              ? post.likes[0].name : post.likes[post.likes.length - 1].name + " и ещё " + (post.likes.length - 1)}</strong>
           </p>
         </div>
         <p class="post-text">
@@ -59,6 +58,40 @@ export function renderPostsPageComponent({ appEl }) {
       });
     });
   }
-}
 
+
+function likes() {
+  const likeButtonElements = document.querySelectorAll(".like-button");
+  for(const likeButtonElement of likeButtonElements) {
+    likeButtonElement.addEventListener('click', (e) => {
+
+      e.stopPropagation();
+      const id = likeButtonElement.dataset.postId;
+      const isLiked = likeButtonElement.dataset.liked;
+      
+      if(isLiked === "false") {
+        addLike({id, token: getToken()})
+        .then(() => {
+          return getPosts({token: getToken()})
+        })
+          .then((data) => {
+            setPosts(data)
+            renderApp()
+        }) 
+      }
+      else{
+        addDislike({id, token: getToken()})
+        .then(() => {
+          return getPosts({token: getToken()})
+        })
+          .then((data) => {
+            setPosts(data)
+            renderApp()
+        }) 
+      }
+    })
+  }
+  }
+  likes()
+}
 

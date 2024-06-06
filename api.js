@@ -110,6 +110,9 @@ export function getUserPost  ({token, id}) {
 }
 
 export function addLike ({id, token}) {
+  if(!token) {
+    return alert ("Не авторизованные пользователи не могут ставить лайк")
+  }
   return fetch(postsHost + `/${id}/like`, {
     method: "POST",
     headers: {
