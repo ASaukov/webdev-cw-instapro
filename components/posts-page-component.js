@@ -2,6 +2,9 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, setPosts, renderApp, getToken, token } from "../index.js";
 import { addDislike, addLike, getPosts } from "../api.js";
+import { formatDistanceToNow } from "date-fns";
+
+
 
 export function renderPostsPageComponent({ appEl }) {
 
@@ -10,6 +13,7 @@ export function renderPostsPageComponent({ appEl }) {
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
   const appHtml = posts.map((post) => {
+    // getDate = formatDistanceToNow(new Date(post.createdAt))
     return `
       <li class="post">
         <div class="post-header" data-user-id=${post.user.id}>
@@ -33,7 +37,7 @@ export function renderPostsPageComponent({ appEl }) {
           ${post.description}
         </p>
         <p class="post-date">
-          19 минут назад
+          ${formatDistanceToNow(post.createdAt)} назад
         </p>
       </li>
     `;

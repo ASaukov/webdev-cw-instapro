@@ -3,11 +3,10 @@ import { renderHeaderComponent } from "./header-component.js";
 import { getToken, goToPage, posts, renderApp, setPosts, } from "../index.js";
 import { addDislike, addLike, getUserPost, } from "../api.js";
 
-
 export function renderUserPostsPageComponent({ appEl }) {
 
-
   const appHtml = posts.map((post) => {
+   
     return `
       <li class="post">
         <div class="post-image-container">
