@@ -2,6 +2,8 @@
 import { renderHeaderComponent } from "./header-component.js";
 import { getToken, goToPage, posts, renderApp, setPosts, } from "../index.js";
 import { addDislike, addLike, getUserPost, } from "../api.js";
+import { formatDistanceToNow } from "date-fns";
+import { ru } from "date-fns/locale";
 
 export function renderUserPostsPageComponent({ appEl }) {
 
@@ -26,7 +28,7 @@ export function renderUserPostsPageComponent({ appEl }) {
           ${post.description}
         </p>
         <p class="post-date">
-          19 минут назад
+          ${formatDistanceToNow(new Date(post.createdAt), {locale: ru})} назад
         </p>
       </li>
     `;
