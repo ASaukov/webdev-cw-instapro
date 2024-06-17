@@ -37,6 +37,8 @@ export const setPosts = (newPosts) => {
   posts = newPosts;
 }
 
+export let userId
+
 /**
  * Включает страницу приложения
  */
@@ -75,7 +77,9 @@ export const goToPage = (newPage, data) => {
     if (newPage === USER_POSTS_PAGE) {
       page = LOADING_PAGE;
       renderApp();
-
+      
+      userId = data.userId
+      
       return getUserPost({ token: getToken(), id: data.userId })
         .then((newPosts) => {
           page = USER_POSTS_PAGE;

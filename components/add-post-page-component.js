@@ -1,5 +1,6 @@
 
 
+import { sunitizeInput } from "../helpers.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
@@ -60,7 +61,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick, imageUrl }) 
       }
 
       onAddPostClick({
-        description: textareaFoto.value,
+        description: sunitizeInput(textareaFoto.value),
         imageUrl: imageUrl,
       });
     });
