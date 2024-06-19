@@ -32,7 +32,7 @@ export function renderPostsPageComponent({ appEl }) {
         </div>
         <p class="post-text">
           <span class="user-name">${post.user.name}</span>
-          ${post.description}
+          ${sunitizeInput(post.description)}
         </p>
         <p class="post-date">
          ${formatDistanceToNow(new Date(post.createdAt), {locale: ru})} назад
